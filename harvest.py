@@ -53,6 +53,12 @@ def make_melon_types():
     all_melon_types.append(crenshaw)
     crenshaw.add_pairing("proscuitto")
 
+    yellow_watermelon = MelonType("yw",2013,"yellow",True,True,"Yellow Watermelon")
+    all_melon_types.append(yellow_watermelon)
+    yellow_watermelon.add_pairing("ice cream")
+
+
+
     return all_melon_types
 
 
@@ -79,19 +85,55 @@ def make_melon_type_lookup(melon_types):
 
 class Melon(object):
     """A melon in a melon harvest."""
+    def __init__(self, melon_type, shape_rating, color_rating, field, harvester):
+    
+        self.melon_type = melon_type
+        self.shape_rating = shape_rating
+        self.color_rating = color_rating
+        self.field = field
+        self.harvester = harvester
+        # self.sellable = None
 
-    # Fill in the rest
-    # Needs __init__ and is_sellable methods
+    @property
+    def sellable(self):
+        return self.shape_rating > 5 and self.color_rating > 5 and self.field !=3
+
+    # def is_sellable(self):
+    #     """Evaluates if melon is sellable."""
+    #     self.sellable = self.shape_rating > 5 and self.color_rating > 5 and self.field !=3
+      
+    #     return self.sellable
 
 def make_melons(melon_types):
     """Returns a list of Melon objects."""
+    melons_by_id = make_melon_type_lookup(melon_types)
+    melon_inventory = []
 
-    # Fill in the rest
+    melon_1 = Melon(melons_by_id['yw'], 8, 7, 2, 'Sheila')
+    melon_inventory.append(melon_1)
+
+    melon_2 = Melon(melons_by_id['yw'],3,4,2,'Shiela')
+    melon_inventory.append(melon_2)
+
+    melon_3 = Melon(melons_by_id['yw'],9,8,3,'Shiela')
+    melon_inventory.append(melon_3)
+
+    melon_4 = Melon(melons_by_id['cas'],10,6,35,'Shiela')
+    melon_inventory.append(melon_4)
+    
+    return melon_inventory
 
 def get_sellability_report(melons):
     """Given a list of melon object, prints whether each one is sellable."""
+    for melon in melons:
+
+        sellable = "(CAN BE SOLD)" if melon.sellable else "(NOT SELLABLE)"
+
+        print(f"harvested by {melon.harvester} from Field {melon.field} {sellable}")
 
     # Fill in the rest 
 
+test = make_melon_types()
+get_sellability_report(make_melons(test))
 
 
